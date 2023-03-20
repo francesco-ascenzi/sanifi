@@ -2,8 +2,22 @@
 
 require_once "lib/sanify.php";
 
-$text = "Ciao mondo<script>";
+$text = "74839281-2839-2812-8493-182930493829";
 
-echo Sanify::Text($text);
+$res = Sanify::Uuid($text);
 
-?>
+echo print_r($res);
+
+// $time = $res["time"] - microtime(true);
+
+// echo $time;
+
+
+
+/* 
+
+Sanify email time - 0.003 ms 
+
+
+
+*/
