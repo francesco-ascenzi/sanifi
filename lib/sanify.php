@@ -71,11 +71,61 @@ class Sanify {
         return null;
     }
 
-    public static function Text() {
+    public static function Text($text, int $newlines = 0, int $encoding = 1) {
+        if (gettype($text) !== "string") return null;
+
+        $text = (string)$text;
+
+        if (strlen($text) === 0 || strlen($text) <= 3) return null;
+
+        if ($encoding) {
+            $text = mb_convert_encoding($text, "utf-8");
+        } // QUI
+
+        if (strpos($text, '<') !== false) {
+		    $text = pre_kses_less_than($text);
+	    	$text = strip_all_tags($text);
+		    $text = str_replace("<\n", "&lt;\n", $text);
+        }
+
+        if ($newlines !== 0) {
+            $text = preg_replace('/[\r\n\t ]+/', ' ', $text);
+        }
+
+        $text = trim($text);
+
+        $found = false;
+        while (preg_match('/%[a-f0-9]{2}/i', $text, $match) ) {
+		    $text = str_replace($match[0], '',$text);
+		    $found = true;
+	    }
+
+	    if ($found) {
+            $text = trim( preg_replace('/ +/', ' ', $text));
+        }
+
+        return $text;
 
     }
 
     public static function uuid() {
+        // 123e4567-e89b-12d3-a456-426614174000
+    }
 
+    // PRIVATE
+
+    private function pre_kses_less_than($text) {
+        return preg_replace_callback('%<[^>]*?((?=<)|>|$)%', 'pre_kses_less_than_callback', $text);
+    }
+
+    private function strip_all_tags($text, int $breaks = 1) {
+        $text = preg_replace('@<(script|style)[^>]*?>.*?</\\1>@si', '', $text);
+        $text = strip_tags($text);
+    
+        if ($breaks) {
+            $text = preg_replace('/[\r\n\t ]+/', ' ', $text);
+        }
+    
+        return trim($text);
     }
 }
