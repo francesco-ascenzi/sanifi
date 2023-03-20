@@ -2,7 +2,7 @@
 
 /** 
  * 
- * SANIFY CLASS
+ * SANIFI CLASS
  * 
  * This is a lightweight class to sanitize data inputs from client
  * 
@@ -19,7 +19,7 @@
  * 
 **/
 
-class Sanify {
+class Sanifi {
 
     // ________
 
