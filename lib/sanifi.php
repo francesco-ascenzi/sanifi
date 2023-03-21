@@ -187,7 +187,13 @@ class Sanifi {
 	    }
 
 	    if ($found) {
-            $text = trim( preg_replace('/ +/', ' ', $text));
+            $text = trim(preg_replace('/ +/', ' ', $text));
+        }
+
+        if ($text === "" || $text === " ") {
+            $resp["function_error"] = "Empty text error";
+            $resp["client_error"] = "You inserted an empty text";
+            return $resp;
         }
 
         $resp["passed"] = 1;
