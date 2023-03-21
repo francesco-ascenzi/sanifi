@@ -49,7 +49,7 @@ $res = Sanifi::String($string_to_sanitize, $min_length, $max_length, $style);
 
 ### Text
 ```
-$res = Sanifi::Text($text_to_sanitize, $min_length, $max_length);
+$res = Sanifi::Text($text_to_sanitize, $min_length, $max_length, $keep_break);
 ```
 
 ### Uuid
