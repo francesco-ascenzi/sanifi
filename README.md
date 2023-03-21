@@ -19,7 +19,7 @@ Call the relevant method (e.g. Email, Number, String, etc.) and pass availables 
 Example:
 
 ``` 
-$res = Sanifi::Email($mail_to_sanitize, 6, 120);
+Sanifi::Email($mail_to_sanitize, 6, 120);
 ```
 
 ## Options values
@@ -99,17 +99,17 @@ $res["client_error"];
 $res["data"];
 ```
 
-## Passed
+### Passed
 In order to check if value is valid and sanitized use ```$res["passed"]```.
 
 Value -> 0 if there was an error, 1 if it's passed
 
-## Server/Function error
+### Server/Function error
 If ```$res["passed"]``` return 0, you can understand with ```$res["function_error"]``` what's wrong with inputted data.
 
-## Client error
+### Client error
 If ```$res["passed"]``` return 0, you can show to the client with ```$res["function_error"]``` what's wrong with inputted data.
 
-## Data
+### Data
 If ```$res["passed"]``` return 0, ```$res["data"]``` will be empty.  
 If ```$res["passed"]``` return 1, ```$res["data"]``` will be filled with validated and sanitized given value.
