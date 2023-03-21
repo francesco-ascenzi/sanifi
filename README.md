@@ -36,22 +36,47 @@ In order to customize personal use of Sanifi, you can choose some attributes to 
 ```
 $res = Sanifi::Email($email_to_sanitize, $min_length, $max_length);
 ```
+**int** $min_length
+**int** $max_length
 
+Example:
+```
+Sanifi::Email("trythis@mail.com", 0, 120);
+```
 ### Number
 ```
-$res = Sanifi::Number($number_to_sanitize, $min_value,  $max_value);
+$res = Sanifi::Number($number_to_sanitize, $min_value, $max_value);
 ```
+**float** $min_value
+**float** $max_value
 
+Example:
+```
+Sanifi::Number($number_to_sanitize, 0.2, 3000);
+```
 ### String
 ```
 $res = Sanifi::String($string_to_sanitize, $min_length, $max_length, $style);
 ```
+**int** $min_length
+**int** $max_length
+**string** $style  
+    \- Default: First character uppercase  
+    \- "lower": Lowercase every character  
+    \- "upper": Uppercase every character  
+    \- "upperWords": Uppercase every first character  
 
+Example:
+```
+Sanifi::Number($number_to_sanitize, 0.2, 3000);
+```
 ### Text
 ```
 $res = Sanifi::Text($text_to_sanitize, $min_length, $max_length, $keep_break);
 ```
-
+**int** $min_length
+**int** $max_length
+**int** $keep_break
 ### Uuid
 ```
 $res = Sanifi::Uuid($uuid_to_sanitize);

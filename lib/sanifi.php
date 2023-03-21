@@ -32,11 +32,11 @@ class Sanifi {
             return $resp;
         }
 
-        if (strlen($email) < $min_length) {
+        if (strlen($email) <= $min_length) {
             $resp["function_error"] = "Length error: " . strlen($email) . " characters long";
             $resp["client_error"] = "You entered a short email address";
             return $resp;
-        } else if (strlen($email) > $max_length) {
+        } else if (strlen($email) >= $max_length) {
             $resp["function_error"] = "Length error: " . strlen($email) . " characters long";
             $resp["client_error"] = "You entered a long email address";
             return $resp;
@@ -56,20 +56,20 @@ class Sanifi {
 
     // ________
 
-    public static function Number($number, int $min = -1000, int $max = 1000) {
+    public static function Number($number, float $min_value = -1000, float $max_value = 1000) {
         $resp = array("passed" => 0, "function_error" => "", "client_error" => "", "data" => "");
 
-        if (!in_array(gettype($number), array("integer", "double"))) {
+        if (!in_array(gettype($number), array("integer", "double", "float"))) {
             $resp["function_error"] = "Type error: " . gettype($number);
             $resp["client_error"] = "You inserted an invalid number";
             return $resp;
         }
 
-        if ($number < $min) {
+        if ($number < $min_value) {
             $resp["function_error"] = "Length error: " . $number;
             $resp["client_error"] = "You entered a too low number";
             return $resp;
-        } else if ($number > $max) {
+        } else if ($number > $max_value) {
             $resp["function_error"] = "Length error: " . $number;
             $resp["client_error"] = "You entered a too high number";
             return $resp;
@@ -88,12 +88,22 @@ class Sanifi {
 
     // ________
 
-    public static function String($string, string $style = "", int $min = 0, int $max = 255) {
+    public static function String($string, int $min_length = 0, int $max_length = 255, string $style = "") {
         $resp = array("passed" => 0, "function_error" => "", "client_error" => "", "data" => "");
 
         if (gettype($string) !== "string") {
             $resp["function_error"] = "Type error: " . gettype($string);
             $resp["client_error"] = "You inserted an invalid text";
+            return $resp;
+        }
+
+        if (strlen($string) <= $min_length) {
+            $resp["function_error"] = "Length error: " . strlen($string);
+            $resp["client_error"] = "You entered a too short text";
+            return $resp;
+        } else if (strlen($string) >= $max_length) {
+            $resp["function_error"] = "Length error: " . strlen($string);
+            $resp["client_error"] = "You entered a too long text";
             return $resp;
         }
 
@@ -131,7 +141,7 @@ class Sanifi {
 
     // ________
 
-    public static function Text($text, int $min = 4, int $max = 250, int $keep_break = 0) {
+    public static function Text($text, int $min_length = 4, int $max_length = 250, int $keep_break = 0) {
         $resp = array("passed" => 0, "function_error" => "", "client_error" => "", "data" => "");
 
         if (gettype($text) !== "string" || $text === "") {
@@ -140,11 +150,11 @@ class Sanifi {
             return $resp;
         }
 
-        if (strlen($text) <= $min) {
+        if (strlen($text) <= $min_length) {
             $resp["function_error"] = "Length error: " . strlen($text) . " characters long";
             $resp["client_error"] = "You entered a too short text";
             return $resp;
-        } else if (strlen($text) >= $max) {
+        } else if (strlen($text) >= $max_length) {
             $resp["function_error"] = "Length error: " . strlen($text) . " characters long";
             $resp["client_error"] = "You entered a too long text";
             return $resp;
