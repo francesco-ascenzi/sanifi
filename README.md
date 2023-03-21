@@ -14,76 +14,83 @@ Sanifi has 5 built-in methods to check and validate data.
 **Uuid**: return validated and sanitized uuid.  
 
 ## How to use it
-Call the relevant method (e.g. Email, Number, String, etc.) in this way:
+Call the relevant method (e.g. Email, Number, String, etc.) and pass availables options.
 
-``` 
-$res = Sanifi::RelevantMethod($value, $options);
-```
-
-$value = raw data getted from client inputs  
-$options = every methods has its own options, check options section down below
-
-Example of use:
+Example:
 
 ``` 
 $res = Sanifi::Email($mail_to_sanitize, 6, 120);
 ```
 
 ## Options values
-In order to customize personal use of Sanifi, you can choose some attributes to set as a options.
+In order to return a customized value, you can set options.
 
 ### Email
-```
-$res = Sanifi::Email($email_to_sanitize, $min_length, $max_length);
-```
-**int** $min_length
-**int** $max_length
+Options:  
+    \- **int** $min_length -> number  
+    \- **int** $max_length -> number  
 
-Example:
+Function:
+```
+public static function Email($email, int $min_length = 6, int $max_length = 320) {}
+```
+Example of use:
 ```
 Sanifi::Email("trythis@mail.com", 0, 120);
 ```
+
 ### Number
-```
-$res = Sanifi::Number($number_to_sanitize, $min_value, $max_value);
-```
-**float** $min_value
-**float** $max_value
+Options:  
+    \- **float** $min_value - number  
+    \- **float** $max_value - number  
 
-Example:
+Function:  
+```
+public static function Number($number, float $min_value = -1000, float $max_value = 1000) {}
+```
+Example of use:  
 ```
 Sanifi::Number($number_to_sanitize, 0.2, 3000);
 ```
+
 ### String
-```
-$res = Sanifi::String($string_to_sanitize, $min_length, $max_length, $style);
-```
-**int** $min_length
-**int** $max_length
-**string** $style  
-    \- Default: First character uppercase  
-    \- "lower": Lowercase every character  
-    \- "upper": Uppercase every character  
-    \- "upperWords": Uppercase every first character  
+Options:  
+    \- **int** $min_length - number  
+    \- **int** $max_length - number  
+    \- **string** **case insensitive** $style - lower -> lowercase every character, upper -> uppercase every character, upperwords -> uppercase every first character (first character uppercase default)
 
-Example:
+Function:
 ```
-Sanifi::Number($number_to_sanitize, 0.2, 3000);
+public static function String($string, int $min_length = 0, int $max_length = 255, string $style = "") {}
 ```
+Example of use:
+```
+Sanifi::Number($string_to_sanitize, 0.2, 3000, "lower");
+```
+
 ### Text
+Options:  
+\- **int** $min_length - number  
+\- **int** $max_length - number  
+\- **int** $keep_break - boolean  
+
+Function:
 ```
-$res = Sanifi::Text($text_to_sanitize, $min_length, $max_length, $keep_break);
+public static function Text($text, int $min_length = 4, int $max_length = 250, int $keep_break = 0) {}
 ```
-**int** $min_length
-**int** $max_length
-**int** $keep_break
+Example of use:
+```
+Sanifi::Text($text_to_sanitize, 0, 3000, 1);
+```
+
 ### Uuid
+Function
 ```
-$res = Sanifi::Uuid($uuid_to_sanitize);
+public static function Uuid($uuid) {}
 ```
 
 ## Return
-Check for returning data:
+Every methods return an ```Array()``` with 4 associative values.
 
 ``` 
 $res["passed"];
@@ -91,3 +98,18 @@ $res["function_error"];
 $res["client_error"];
 $res["data"];
 ```
+
+## Passed
+In order to check if value is valid and sanitized use ```$res["passed"]```.
+
+Value -> 0 if there was an error, 1 if it's passed
+
+## Server/Function error
+If ```$res["passed"]``` return 0, you can understand with ```$res["function_error"]``` what's wrong with inputted data.
+
+## Client error
+If ```$res["passed"]``` return 0, you can show to the client with ```$res["function_error"]``` what's wrong with inputted data.
+
+## Data
+If ```$res["passed"]``` return 0, ```$res["data"]``` will be empty.  
+If ```$res["passed"]``` return 1, ```$res["data"]``` will be filled with validated and sanitized given value.
